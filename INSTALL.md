@@ -1,4 +1,6 @@
-﻿Folio PDF Studio 1.0.0 — Windows x64
+说明：安装包约 128 MB，超过 GitHub 单文件限制，未提交到源码仓库；请在本机 dist/ 目录使用。
+
+Folio PDF Studio 1.0.0 — Windows x64
 ======================================
 
 1. 一键安装

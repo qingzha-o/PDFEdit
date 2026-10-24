@@ -28,8 +28,10 @@ http://127.0.0.1:4173
 
 | 产物 | 路径 |
 | --- | --- |
-| 一键安装包 | `dist/Folio-PDF-Studio-Setup-1.0.0.exe` |
+| 一键安装包（本地构建） | `dist/Folio-PDF-Studio-Setup-1.0.0.exe` |
 | 已安装位置 | `%LOCALAPPDATA%\Programs\Folio PDF Studio` |
+
+仓库只提交源码、依赖资源和构建脚本；约 128 MB 的安装包超过 GitHub 单文件提交限制，因此保存在本机 `dist/`，不进入 Git 历史。
 
 安装版会在桌面和开始菜单创建 **Folio PDF Studio** 快捷方式，安装到当前用户目录，不需要管理员权限。当前机器已经直接部署完成，可以直接双击桌面快捷方式启动。
 
