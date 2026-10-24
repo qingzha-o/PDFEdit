@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #eef1f3; }
+body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; color: #1c2c39; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { position: relative; width: 210mm; height: 297mm; overflow: hidden; page-break-after: always; background: #F7FAFC; }
+.page:nth-child(2) { background: #F4F7F4; }
+.header { position: absolute; left: 0; right: 0; top: 0; height: 68mm; background: #17384A; }
+.header .brand { position: absolute; left: 20mm; top: 18mm; font-family: Arial, sans-serif; font-size: 7pt; letter-spacing: .22em; color: #8EB6C9; }
+.header .no { position: absolute; right: 20mm; top: 18mm; font-family: "Courier New", monospace; font-size: 8pt; color: #8EB6C9; }
+.header h1 { position: absolute; left: 20mm; top: 28mm; margin: 0; font-family: "Microsoft YaHei", "PingFang SC", sans-serif; font-weight: 300; font-size: 38pt; letter-spacing: .08em; color: #F2F8FA; }
+.header .sub { position: absolute; left: 20mm; top: 51mm; font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 11pt; color: #9FC6D4; }
+.content { position: absolute; left: 20mm; right: 20mm; top: 89mm; }
+.kicker { font-family: Arial, sans-serif; font-size: 6.6pt; letter-spacing: .2em; color: #5A8297; }
+.content h2 { margin: 4mm 0 0; font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 24pt; color: #1B3747; }
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 11mm; margin-top: 9mm; }
+.split p { margin: 0; font-family: "Microsoft YaHei", "PingFang SC", sans-serif; font-size: 9.1pt; line-height: 1.95; color: #536874; }
+.split .en { font-family: "Times New Roman", Georgia, serif; font-size: 10pt; line-height: 1.7; color: #647680; }
+.panel { margin-top: 13mm; padding: 7mm 8mm; border-left: 2.2mm solid #D29A5C; background: #EAF0F2; }
+.panel strong { display: block; font-family: "Microsoft YaHei", sans-serif; font-weight: 600; font-size: 11pt; color: #294A5C; }
+.panel p { margin: 3mm 0 0; font-size: 8.8pt; line-height: 1.85; color: #5A707B; }
+.steps { margin-top: 13mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; }
+.step { border-top: .8pt solid #C9D8DE; padding-top: 4mm; }
+.step .n { font-family: "Courier New", monospace; font-size: 8pt; color: #D29A5C; }
+.step h3 { margin: 3mm 0 0; font-size: 10pt; font-weight: 600; color: #2A4655; }
+.step p { margin: 2mm 0 0; font-size: 8.2pt; line-height: 1.65; color: #70818A; }
+.footer { position: absolute; left: 20mm; right: 20mm; bottom: 13mm; display: flex; justify-content: space-between; padding-top: 3mm; border-top: .35pt solid #D4DEE3; font-family: Arial, sans-serif; font-size: 6.2pt; letter-spacing: .12em; color: #8197A1; }
+.second .header { background: #385F4D; }
+.second .header .brand, .second .header .no, .second .header .sub { color: #B9D0C3; }
+.second .kicker { color: #6F8C7D; }
+.second .content h2 { color: #263F33; }
+.second .panel { border-left-color: #8A6D4B; background: #EAF0E9; }
+.second .step { border-top-color: #CBDBD0; }
+.badge { display: inline-block; margin-top: 7mm; padding: 2mm 4mm; border: .5pt solid #9AB6C2; border-radius: 10mm; font-family: Arial, sans-serif; font-size: 6.2pt; letter-spacing: .14em; color: #4A7183; }
+.second .badge { border-color: #9DB8A7; color: #52725F; }
+</style></head>
+<body>
+<section class="page first">
+  <div class="header">
+    <div class="brand">DOCUMENT EXCHANGE / SOURCE B</div>
+    <div class="no">REPLACEMENT 01 / 02</div>
+    <h1>替换页</h1>
+    <div class="sub">A page borrowed from a different document.</div>
+  </div>
+  <div class="content">
+    <div class="kicker">PAGE REPLACEMENT DEMONSTRATION</div>
+    <h2>This page can replace another.</h2>
+    <div class="split">
+      <p>这是一份独立的替换页样本。它来自另一份 PDF，在 Folio 中被选中并替换到当前文档的指定页面。原有页面的尺寸、顺序和其他页面都不会改变。</p>
+      <p class="en">This page is sourced from a separate PDF. In Folio it can be chosen in the page-replacement picker and placed into the current document without disturbing the remaining pages.</p>
+    </div>
+    <div class="panel">
+      <strong>替换之后仍然可以编辑文字</strong>
+      <p>页面替换完成后，Folio 会重新读取这一页的文本层。字体、颜色和字重会再次从上下文中提取，自动换行和单页压缩同样有效。</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">01</div><h3>选择替换页</h3><p>打开另一份 PDF，从缩略图中选择任意一页。</p></div>
+      <div class="step"><div class="n">02</div><h3>保留版式</h3><p>默认保持当前页面尺寸，将新内容等比居中。</p></div>
+      <div class="step"><div class="n">03</div><h3>继续编辑</h3><p>替换页上的文字块仍然可以被识别与修改。</p></div>
+    </div>
+    <div class="badge">SOURCE DOCUMENT / TWO PAGES</div>
+  </div>
+  <div class="footer"><span>DOCUMENT EXCHANGE</span><span>REPLACEMENT / 01</span></div>
+</section>
+
+<section class="page second">
+  <div class="header">
+    <div class="brand">DOCUMENT EXCHANGE / SOURCE B</div>
+    <div class="no">REPLACEMENT 02 / 02</div>
+    <h1>备选页</h1>
+    <div class="sub">A quieter alternative for the same slot.</div>
+  </div>
+  <div class="content">
+    <div class="kicker">ALTERNATE PAGE</div>
+    <h2>Second page, second option.</h2>
+    <div class="split">
+      <p>如果第一页不合适，可以选择这份文档的第二页。替换页的文字层同样会被解析，颜色和字重会被重新识别。</p>
+      <p class="en">If the first option is not the right fit, the second page can be used instead. Its text layer is parsed in exactly the same way.</p>
+    </div>
+    <div class="panel">
+      <strong>页面尺寸可以切换</strong>
+      <p>替换时取消“保持当前页面尺寸”，便会采用来源页自身的尺寸。适合将 A4 文档中的某一页替换为横向或 Letter 页面。</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">A</div><h3>保持原尺寸</h3><p>内容等比缩放，四周留白。</p></div>
+      <div class="step"><div class="n">B</div><h3>采用新尺寸</h3><p>页面随来源页改变，其余页不变。</p></div>
+      <div class="step"><div class="n">C</div><h3>随时撤销</h3><p>替换操作进入历史记录，可一键还原。</p></div>
+    </div>
+    <div class="badge">ALTERNATE / READY TO USE</div>
+  </div>
+  <div class="footer"><span>DOCUMENT EXCHANGE</span><span>REPLACEMENT / 02</span></div>
+</section>
+</body></html>

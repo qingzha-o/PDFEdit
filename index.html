@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Folio · PDF 文本工作室</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="m5 3 6.4 17 2.6-6.1L20 11.2 5 3Z"/><path d="m13.2 13.9 4.7 4.8"/></symbol>
+    <symbol id="i-type" viewBox="0 0 24 24"><path d="M5 5h14M12 5v15M8.5 20h7"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/><rect x="3" y="3" width="18" height="18" rx="2" opacity=".18"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 7 4 12l5 5"/><path d="M4 12h9a6 6 0 1 1 0 12" transform="translate(0 -6)"/></symbol>
+    <symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 7 5 5-5 5"/><path d="M20 12h-9a6 6 0 1 0 0 12" transform="translate(0 -6)"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5"/><path d="M4 19h16"/></symbol>
+    <symbol id="i-fit" viewBox="0 0 24 24"><path d="M8 3H3v5M16 3h5v5M8 21H3v-5M16 21h5v-5"/><rect x="8" y="8" width="8" height="8" rx="1"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-plus-page" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h4"/><path d="M12 11v6M9 14h6"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M9 3h6l1 4H8l1-4ZM6 7l1 14h10l1-14M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="m19 16 .8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5"/><path d="M4 15v4h16v-4"/></symbol>
+    <symbol id="i-pages" viewBox="0 0 24 24"><rect x="6" y="6" width="14" height="16" rx="1"/><path d="M4 18V4h12"/></symbol>
+    <symbol id="i-align-left" viewBox="0 0 24 24"><path d="M4 6h16M4 10h10M4 14h16M4 18h8"/></symbol>
+    <symbol id="i-align-center" viewBox="0 0 24 24"><path d="M4 6h16M7 10h10M4 14h16M8 18h8"/></symbol>
+    <symbol id="i-align-right" viewBox="0 0 24 24"><path d="M4 6h16M10 10h10M4 14h16M12 18h8"/></symbol>
+    <symbol id="i-align-justify" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></symbol>
+    <symbol id="i-droplet" viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11Z"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.2"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h15m0 0-5-5m5 5-5 5"/></symbol>
+    <symbol id="i-move" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18M12 3 9 6m3-3 3 3M12 21l-3-3m3 3 3-3M3 12l3-3m-3 3 3 3M21 12l-3-3m3 3-3 3"/></symbol>
+    <symbol id="i-magnet" viewBox="0 0 24 24"><path d="M6 4v9a6 6 0 0 0 12 0V4h-4v9a2 2 0 0 1-4 0V4H6Z"/><path d="M6 8h4M14 8h4"/></symbol>
+    <symbol id="i-rotate-left" viewBox="0 0 24 24"><path d="M4 10V5h5"/><path d="M4.8 8.6A8 8 0 1 1 4 15"/><path d="m11 10-4 3 3 4"/></symbol>
+    <symbol id="i-rotate-right" viewBox="0 0 24 24"><path d="M20 10V5h-5"/><path d="M19.2 8.6A8 8 0 1 0 20 15"/><path d="m13 10 4 3-3 4"/></symbol>
+    <symbol id="i-grip" viewBox="0 0 24 24"><circle cx="8" cy="7" r="1"/><circle cx="8" cy="12" r="1"/><circle cx="8" cy="17" r="1"/><circle cx="16" cy="7" r="1"/><circle cx="16" cy="12" r="1"/><circle cx="16" cy="17" r="1"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4"/><path d="M8 9h8M8 12h8M8 15h5"/></symbol>
+    <symbol id="i-folder-plus" viewBox="0 0 24 24"><path d="M3 7V5h6l2 2h10v12H3z"/><path d="M12 11v6M9 14h6"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M8 5h12l4 4v18H8z" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M20 5v5h4M12 14h8M12 18h8M12 22h5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        </div>
+        <div class="brand-copy">
+          <strong>Folio</strong>
+          <span>PDF STUDIO</span>
+        </div>
+      </div>
+
+      <div class="doc-pill" id="docPill">
+        <svg class="icon"><use href="#i-file"/></svg>
+        <div class="doc-pill-copy">
+          <span id="fileName">尚未打开文档</span>
+          <span id="fileState">全部处理均在本地完成</span>
+        </div>
+        <span class="doc-dot" id="docDot"></span>
+        <button class="doc-open-btn" id="btnOpenAnother" title="打开另一个 PDF" disabled>
+          <svg class="icon"><use href="#i-folder-plus"/></svg>
+        </button>
+      </div>
+
+      <div class="top-actions">
+        <div class="icon-group">
+          <button class="icon-btn" id="btnUndo" title="撤销 (Ctrl+Z)" disabled><svg class="icon"><use href="#i-undo"/></svg></button>
+          <button class="icon-btn" id="btnRedo" title="重做 (Ctrl+Shift+Z)" disabled><svg class="icon"><use href="#i-redo"/></svg></button>
+        </div>
+        <span class="top-sep"></span>
+        <button class="btn-export" id="btnExport" disabled>
+          <svg class="icon"><use href="#i-download"/></svg><span>下载 PDF</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="studio">
+      <aside class="page-rail" aria-label="页面列表">
+        <div class="rail-head">
+          <div>
+            <span class="eyebrow">PAGES</span>
+            <h2>页面 <span id="pageCount">0</span></h2>
+          </div>
+          <button class="rail-icon-btn" id="btnAddBlank" title="插入空白页" disabled><svg class="icon"><use href="#i-plus-page"/></svg></button>
+        </div>
+        <div class="thumb-list" id="thumbList">
+          <div class="rail-empty">
+            <div class="rail-empty-lines"><span></span><span></span><span></span></div>
+            <p>打开 PDF 后<br>页面会出现在这里</p>
+          </div>
+        </div>
+        <div class="rail-foot">
+          <div class="rail-tip"><span class="tip-dot"></span>拖入 PDF 即可替换当前页</div>
+        </div>
+      </aside>
+
+      <main class="workspace" id="workspace">
+        <div class="workspace-top">
+          <div class="breadcrumb">
+            <span id="docCrumb">文档</span>
+            <span class="crumb-sep">/</span>
+            <strong id="pageCrumb">未选择页面</strong>
+          </div>
+          <div class="context-chips">
+            <span class="mini-chip" id="textLayerChip"><span class="chip-dot"></span>文本层待识别</span>
+            <span class="mini-chip chip-muted" id="fitChip"><svg class="icon"><use href="#i-spark"/></svg>单页智能适配</span>
+          </div>
+        </div>
+
+        <div class="canvas-scroll" id="canvasScroll">
+          <div class="welcome" id="welcome">
+            <div class="welcome-card">
+              <div class="welcome-art" aria-hidden="true">
+                <div class="paper paper-back"></div>
+                <div class="paper paper-mid"></div>
+                <div class="paper paper-front">
+                  <div class="paper-kicker">FIELD NOTES / 06</div>
+                  <div class="paper-title">山野之间</div>
+                  <div class="paper-rule"></div>
+                  <div class="paper-lines"><span class="w90"></span><span class="w72"></span><span class="w84"></span><span class="w60"></span></div>
+                  <div class="paper-tag">Aa</div>
+                </div>
+              </div>
+              <div class="welcome-copy">
+                <span class="welcome-kicker"><span></span>CONTEXT-AWARE PDF EDITOR</span>
+                <h1>让 PDF 的每一行，<br>继续像原来那样排。</h1>
+                <p>点开任意文字块，Folio 会读取上下文的字体、颜色与字重。输入时自动换行、压缩行距，始终留在这一页里。</p>
+                <div class="welcome-actions">
+                  <button class="btn-primary" id="btnOpen">
+                    <svg class="icon"><use href="#i-upload"/></svg>打开 PDF
+                  </button>
+                  <button class="btn-ghost" id="btnSample">打开示例文档</button>
+                </div>
+                <div class="welcome-features">
+                  <span><i>01</i>上下文样式识别</span>
+                  <span><i>02</i>自动换行压缩</span>
+                  <span><i>03</i>整页替换</span>
+                </div>
+              </div>
+              <div class="dropzone" id="dropzone">
+                <svg class="icon"><use href="#i-upload"/></svg>
+                <span>也可以把 PDF 拖到这里</span>
+              </div>
+            </div>
+            <p class="privacy-note">文件不会离开你的设备 · 无上传 · 无账号</p>
+          </div>
+
+          <div class="stage-wrap" id="stageWrap" hidden>
+            <div class="stage" id="stage">
+              <canvas id="pageCanvas"></canvas>
+              <div class="block-layer" id="blockLayer"></div>
+              <div class="guide-layer" id="guideLayer" hidden>
+                <span class="alignment-guide guide-v" id="guideV"></span>
+                <span class="alignment-guide guide-h" id="guideH"></span>
+              </div>
+              <div class="block-tools" id="blockTools" hidden>
+                <span class="block-size-badge" id="blockSizeBadge">—</span>
+                <span class="move-grip" id="moveGrip" title="拖动移动文本块">
+                  <svg class="icon"><use href="#i-grip"/></svg>
+                </span>
+                <span class="resize-handle" data-handle="nw"></span>
+                <span class="resize-handle" data-handle="n"></span>
+                <span class="resize-handle" data-handle="ne"></span>
+                <span class="resize-handle" data-handle="e"></span>
+                <span class="resize-handle" data-handle="se"></span>
+                <span class="resize-handle" data-handle="s"></span>
+                <span class="resize-handle" data-handle="sw"></span>
+                <span class="resize-handle" data-handle="w"></span>
+              </div>
+            </div>
+            <div class="page-caption">
+              <span id="pageCaption">第 1 页</span>
+              <span class="caption-dot"></span>
+              <span id="pageSizeCaption">A4</span>
+            </div>
+          </div>
+
+          <div class="drop-overlay" id="dropOverlay" hidden>
+            <div class="drop-overlay-card">
+              <svg class="icon"><use href="#i-upload"/></svg>
+              <strong>松开以打开 PDF</strong>
+              <span>当前文档会保留在内存中</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="view-dock" id="viewDock" aria-label="页面工具" hidden>
+          <div class="dock-section">
+            <span class="dock-label">TOOLS</span>
+            <button class="view-tool is-active" id="toolSelect" data-tool="select" title="编辑文字 (V)">
+              <svg class="icon"><use href="#i-cursor"/></svg><span>编辑</span>
+            </button>
+            <button class="view-tool" id="toolText" data-tool="text" title="添加文本 (T)">
+              <svg class="icon"><use href="#i-type"/></svg><span>文本</span>
+            </button>
+            <button class="view-tool" id="toolReplace" data-tool="replace" title="替换页面 (R)">
+              <svg class="icon"><use href="#i-swap"/></svg><span>替换页</span>
+            </button>
+            <button class="view-tool" id="btnOcr" title="图片 / 页面 OCR">
+              <svg class="icon"><use href="#i-scan"/></svg><span>OCR</span>
+            </button>
+          </div>
+          <span class="dock-sep"></span>
+          <div class="dock-section">
+            <span class="dock-label">ZOOM</span>
+            <button class="dock-btn" id="btnZoomIn" title="放大 (Ctrl+=)" disabled>
+              <svg class="icon"><use href="#i-plus"/></svg><span>放大</span>
+            </button>
+            <button class="dock-zoom" id="zoomValue" title="适合页面" disabled>100%</button>
+            <button class="dock-btn" id="btnZoomOut" title="缩小 (Ctrl+-)" disabled>
+              <svg class="icon"><use href="#i-minus"/></svg><span>缩小</span>
+            </button>
+            <button class="dock-btn" id="btnFitPage" title="适合页面 (Ctrl+0)" disabled>
+              <svg class="icon"><use href="#i-fit"/></svg><span>适合</span>
+            </button>
+          </div>
+          <span class="dock-sep"></span>
+          <div class="dock-section">
+            <span class="dock-label">ROTATE</span>
+            <button class="dock-btn" id="btnRotateLeft" title="向左旋转 90°" disabled>
+              <svg class="icon"><use href="#i-rotate-left"/></svg><span>左旋</span>
+            </button>
+            <button class="dock-btn" id="btnRotateRight" title="向右旋转 90°" disabled>
+              <svg class="icon"><use href="#i-rotate-right"/></svg><span>右旋</span>
+            </button>
+          </div>
+        </aside>
+
+        <footer class="statusbar">
+          <div class="status-left">
+            <span class="status-light"></span>
+            <span id="statusText">等待打开 PDF</span>
+          </div>
+          <div class="status-right">
+            <span id="statusPage">— / —</span>
+            <span class="status-sep"></span>
+            <span id="statusZoom">100%</span>
+            <span class="status-sep"></span>
+            <span class="shortcut-hint">滚轮翻页 · 按 <kbd>T</kbd> 添加文本</span>
+          </div>
+        </footer>
+      </main>
+
+      <aside class="inspector" id="inspector" aria-label="属性面板">
+        <div class="inspector-empty" id="inspectorEmpty">
+          <div class="inspector-hero">
+            <div class="inspector-orb"><svg class="icon"><use href="#i-spark"/></svg></div>
+            <span class="eyebrow">SMART TYPOGRAPHY</span>
+            <h2>一处输入，<br>上下文接管排版。</h2>
+            <p>Folio 从页面像素与 PDF 字体表两路读取样式，让改写后的文字继续贴着原稿的节奏。</p>
+          </div>
+          <div class="feature-list">
+            <div class="feature-item">
+              <span class="feature-num">01</span>
+              <div><strong>字体 / 颜色 / 字重</strong><p>识别字体家族、视觉字重与文字颜色。</p></div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-num">02</span>
+              <div><strong>自动换行与压缩</strong><p>在原有文本区域内换行，必要时压缩行距与字号。</p></div>
+            </div>
+            <div class="feature-item">
+              <span class="feature-num">03</span>
+              <div><strong>页面替换</strong><p>从另一份 PDF 选页替换当前页，保留其他页面。</p></div>
+            </div>
+          </div>
+          <div class="inspector-note">
+            <svg class="icon"><use href="#i-info"/></svg>
+            <span>所有解析与导出均在浏览器内完成。</span>
+          </div>
+        </div>
+
+        <div class="inspector-page" id="inspectorPage" hidden>
+          <div class="inspector-head">
+            <div>
+              <span class="eyebrow">CURRENT PAGE</span>
+              <h2 id="inspectPageTitle">第 1 页</h2>
+            </div>
+            <span class="page-kind-badge" id="inspectPageKind">原页</span>
+          </div>
+
+          <div class="page-preview-mini" id="pagePreviewMini">
+            <canvas id="miniCanvas"></canvas>
+            <div class="mini-shade"></div>
+            <span>点击页面上的文字开始编辑</span>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-card"><span>页面尺寸</span><strong id="statPageSize">—</strong></div>
+            <div class="stat-card"><span>可编辑文本块</span><strong id="statBlocks">—</strong></div>
+            <div class="stat-card"><span>已修改文本</span><strong id="statEdits">0</strong></div>
+            <div class="stat-card"><span>页面位置</span><strong id="statPosition">—</strong></div>
+          </div>
+
+          <section class="inspector-section">
+            <div class="section-head"><span>页面操作</span><span class="section-tag">PAGE OPS</span></div>
+            <div class="action-list">
+              <button class="action-card" id="btnOpenDocPage">
+                <span class="action-icon"><svg class="icon"><use href="#i-folder-plus"/></svg></span>
+                <span class="action-copy"><strong>打开另一个 PDF</strong><small>保留当前窗口，切换整个文档</small></span>
+                <svg class="icon action-arrow"><use href="#i-arrow-right"/></svg>
+              </button>
+              <button class="action-card" id="btnOcrPage">
+                <span class="action-icon"><svg class="icon"><use href="#i-scan"/></svg></span>
+                <span class="action-copy"><strong>图片 / 页面 OCR</strong><small>识别扫描页或本地图片文字</small></span>
+                <svg class="icon action-arrow"><use href="#i-arrow-right"/></svg>
+              </button>
+              <button class="action-card action-primary" id="btnReplacePage">
+                <span class="action-icon"><svg class="icon"><use href="#i-swap"/></svg></span>
+                <span class="action-copy"><strong>替换当前页</strong><small>从另一份 PDF 选择一页</small></span>
+                <svg class="icon action-arrow"><use href="#i-arrow-right"/></svg>
+              </button>
+              <button class="action-card" id="btnInsertBlank">
+                <span class="action-icon"><svg class="icon"><use href="#i-plus-page"/></svg></span>
+                <span class="action-copy"><strong>插入空白页</strong><small>在当前页之后添加</small></span>
+                <svg class="icon action-arrow"><use href="#i-arrow-right"/></svg>
+              </button>
+              <button class="action-card action-danger" id="btnDeletePage">
+                <span class="action-icon"><svg class="icon"><use href="#i-trash"/></svg></span>
+                <span class="action-copy"><strong>删除当前页</strong><small>其他页面不受影响</small></span>
+                <svg class="icon action-arrow"><use href="#i-arrow-right"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <div class="inspector-note">
+            <svg class="icon"><use href="#i-info"/></svg>
+            <span>替换只影响当前页。编辑过的页面导出时以 2.25× 栅格保留视觉版式，未编辑页保持原始矢量。</span>
+          </div>
+        </div>
+
+        <div class="inspector-block" id="inspectorBlock" hidden>
+          <div class="inspector-head block-head">
+            <div>
+              <span class="eyebrow">TEXT BLOCK · <span id="blockIndexLabel">01</span></span>
+              <h2>编辑文字</h2>
+            </div>
+            <button class="close-btn" id="btnDeselect" title="完成编辑"><svg class="icon"><use href="#i-x"/></svg></button>
+          </div>
+
+          <div class="style-readout">
+            <div class="type-specimen" id="typeSpecimen">Aa</div>
+            <div class="style-readout-copy">
+              <span class="detected-label"><span class="detect-dot"></span>已识别上下文</span>
+              <strong id="detectedFont">—</strong>
+              <small id="detectedMeta">—</small>
+            </div>
+            <span class="color-swatch" id="detectedColorSwatch" title="识别到的文字颜色"></span>
+          </div>
+
+          <section class="inspector-section">
+            <div class="section-head"><span>文字样式</span><span class="section-tag">TYPOGRAPHY</span></div>
+
+            <div class="word-toolbar">
+              <div class="word-group">
+                <button class="word-btn" id="btnBold" title="粗体"><b>B</b></button>
+                <button class="word-btn" id="btnItalic" title="斜体"><i>I</i></button>
+                <button class="word-btn" id="btnUnderline" title="下划线"><u>U</u></button>
+                <button class="word-btn" id="btnStrike" title="删除线"><s>S</s></button>
+              </div>
+              <span class="word-divider"></span>
+              <div class="word-group">
+                <button class="word-btn word-btn-list" id="btnBulletList" title="项目符号">•</button>
+                <button class="word-btn word-btn-list" id="btnNumberList" title="编号列表">1.</button>
+              </div>
+              <span class="word-divider"></span>
+              <div class="word-group">
+                <button class="word-btn word-btn-size" id="btnFontMinus" title="减小字号">A−</button>
+                <button class="word-btn word-btn-size" id="btnFontPlus" title="增大字号">A+</button>
+              </div>
+              <button class="word-clear" id="btnClearFormat" title="清除格式，恢复识别样式">清除格式</button>
+            </div>
+
+            <label class="field">
+              <span class="field-label">字体 <em id="fontFaceHint">自动匹配</em></span>
+              <div class="select-wrap">
+                <select id="fontChoice">
+                  <option value="auto">自动 · 沿用上下文</option>
+                  <option value="sans">无衬线 Sans</option>
+                  <option value="serif">衬线 Serif</option>
+                  <option value="mono">等宽 Mono</option>
+                </select>
+                <svg class="icon select-chevron"><use href="#i-chevron-right"/></svg>
+              </div>
+            </label>
+
+            <div class="field-row">
+              <label class="field">
+                <span class="field-label">字号</span>
+                <div class="number-field">
+                  <input type="number" id="fontSize" min="4" max="144" step="0.5" value="12" />
+                  <span>pt</span>
+                </div>
+              </label>
+              <label class="field">
+                <span class="field-label">字重</span>
+                <div class="select-wrap">
+                  <select id="fontWeight">
+                    <option value="300">细体 300</option>
+                    <option value="400">常规 400</option>
+                    <option value="500">中等 500</option>
+                    <option value="600">半粗 600</option>
+                    <option value="700">粗体 700</option>
+                    <option value="800">特粗 800</option>
+                  </select>
+                  <svg class="icon select-chevron"><use href="#i-chevron-right"/></svg>
+                </div>
+              </label>
+            </div>
+
+            <div class="field-row field-row-color">
+              <label class="field field-color">
+                <span class="field-label">颜色</span>
+                <div class="color-field">
+                  <span class="color-preview" id="colorPreview"><input type="color" id="textColor" value="#1b2420" /></span>
+                  <input type="text" id="colorHex" value="#1B2420" maxlength="7" spellcheck="false" />
+                </div>
+              </label>
+            </div>
+
+            <div class="field-row">
+              <label class="field">
+                <span class="field-label">对齐</span>
+                <div class="segment align-segment" id="alignSegment">
+                  <button data-align="left" title="左对齐"><svg class="icon"><use href="#i-align-left"/></svg></button>
+                  <button data-align="center" title="居中"><svg class="icon"><use href="#i-align-center"/></svg></button>
+                  <button data-align="right" title="右对齐"><svg class="icon"><use href="#i-align-right"/></svg></button>
+                  <button data-align="justify" title="两端对齐"><svg class="icon"><use href="#i-align-justify"/></svg></button>
+                </div>
+              </label>
+              <label class="field">
+                <span class="field-label">行距 <em id="lineHeightValue">1.35</em></span>
+                <input type="range" id="lineHeight" min="0.85" max="2.2" step="0.05" value="1.35" />
+              </label>
+            </div>
+
+            <label class="field">
+              <span class="field-label">字间距 <em id="letterSpacingValue">0.0</em></span>
+              <input type="range" id="letterSpacing" min="-1.5" max="4" step="0.1" value="0" />
+            </label>
+          </section>
+
+          <section class="inspector-section smart-section">
+            <div class="section-head">
+              <span>智能适配</span>
+              <span class="section-tag section-tag-live"><span></span>LIVE</span>
+            </div>
+            <div class="smart-card">
+              <div class="smart-top">
+                <div>
+                  <strong>保持单页版式</strong>
+                  <p>自动换行，并按需压缩字间距与字号。</p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox" id="autoFitToggle" checked />
+                  <span></span>
+                </label>
+              </div>
+              <div class="fit-metrics">
+                <div><span>换行</span><strong id="metricWrap">自动</strong></div>
+                <div><span>行距压缩</span><strong id="metricLine">0%</strong></div>
+                <div><span>字号</span><strong id="metricFont">100%</strong></div>
+              </div>
+              <div class="fit-bar"><span id="fitBarFill"></span></div>
+              <div class="fit-status" id="fitStatus"><span class="fit-ok"></span>内容已落在原文本区域内</div>
+            </div>
+          </section>
+
+          <section class="inspector-section transform-section">
+            <div class="section-head">
+              <span>位置与尺寸</span>
+              <span class="section-tag">TRANSFORM</span>
+            </div>
+            <div class="transform-grid">
+              <div class="transform-cell"><span>X</span><strong id="blockXValue">—</strong></div>
+              <div class="transform-cell"><span>Y</span><strong id="blockYValue">—</strong></div>
+              <div class="transform-cell"><span>W</span><strong id="blockWValue">—</strong></div>
+              <div class="transform-cell"><span>H</span><strong id="blockHValue">—</strong></div>
+            </div>
+            <div class="transform-actions">
+              <button class="toggle-chip" id="btnMoveMode" type="button">
+                <svg class="icon"><use href="#i-move"/></svg>
+                <span>移动模式</span>
+                <kbd>M</kbd>
+              </button>
+              <label class="snap-row">
+                <input type="checkbox" id="snapToggle" checked />
+                <span class="snap-box"><svg class="icon"><use href="#i-magnet"/></svg></span>
+                <span>自动吸附对齐</span>
+              </label>
+            </div>
+            <p class="transform-hint">拖动八个手柄缩放；拖动顶部握把移动；移动模式下方向键微调（Shift 加速）。</p>
+          </section>
+
+          <p class="block-hint">Alt+M 移动模式 · 方向键微调 · Esc 取消 · Ctrl+Enter 应用</p>
+        </div>
+        <div class="block-actions" id="blockActions" hidden>
+          <button class="btn-primary" id="btnApplyBlock"><svg class="icon"><use href="#i-check"/></svg>应用更改</button>
+          <button class="btn-ghost" id="btnCancelBlock">取消</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <input type="file" id="fileInput" accept="application/pdf,.pdf" hidden />
+  <input type="file" id="replaceInput" accept="application/pdf,.pdf" hidden />
+
+  <div class="modal-backdrop" id="replaceModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="replaceTitle">
+      <header class="modal-head">
+        <div>
+          <span class="eyebrow">REPLACE PAGE <span id="replacePageNum">01</span></span>
+          <h2 id="replaceTitle">替换当前页面</h2>
+          <p>选择另一份 PDF 中的一页。其余页面与顺序保持不变。</p>
+        </div>
+        <button class="close-btn modal-close" id="btnCloseReplace" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body">
+        <div class="replace-drop" id="replaceDrop">
+          <svg class="icon"><use href="#i-upload"/></svg>
+          <strong>拖入一份 PDF</strong>
+          <span>或点击选择文件</span>
+          <button class="btn-ghost small" id="btnChooseReplacement">选择 PDF</button>
+        </div>
+        <div class="replace-source" id="replaceSource" hidden>
+          <div class="replace-source-head">
+            <div>
+              <span class="eyebrow">SOURCE DOCUMENT</span>
+              <strong id="replaceSourceName">—</strong>
+            </div>
+            <button class="text-btn" id="btnChangeReplacement">更换文件</button>
+          </div>
+          <div class="replace-pages" id="replacePages"></div>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <label class="check-row"><input type="checkbox" id="keepPageSize" checked /><span>保持当前页面尺寸，替换内容按比例居中</span></label>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="btnCancelReplace">取消</button>
+          <button class="btn-primary" id="btnConfirmReplace" disabled><svg class="icon"><use href="#i-swap"/></svg>替换此页</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="ocrModal" hidden>
+    <div class="modal ocr-modal" role="dialog" aria-modal="true" aria-labelledby="ocrTitle">
+      <header class="modal-head">
+        <div>
+          <span class="eyebrow">OFFLINE OCR</span>
+          <h2 id="ocrTitle">图片 / 页面文字识别</h2>
+          <p>扫描页、截图或本地图片都可以识别。文字只在本机处理，不会上传。</p>
+        </div>
+        <button class="close-btn modal-close" id="btnCloseOcr" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </header>
+      <div class="modal-body ocr-body">
+        <div class="ocr-source-grid">
+          <button class="ocr-source-card" id="ocrCurrentPage">
+            <span class="ocr-source-icon"><svg class="icon"><use href="#i-pages"/></svg></span>
+            <span><strong>识别当前页</strong><small id="ocrPageLabel">当前页面</small></span>
+          </button>
+          <label class="ocr-source-card">
+            <span class="ocr-source-icon"><svg class="icon"><use href="#i-upload"/></svg></span>
+            <span><strong>选择图片</strong><small>PNG / JPG / WebP</small></span>
+            <input type="file" id="ocrImageInput" accept="image/png,image/jpeg,image/webp,image/bmp" hidden />
+          </label>
+        </div>
+        <div class="ocr-status-row">
+          <span class="ocr-status" id="ocrStatus">选择页面或图片开始识别</span>
+          <span class="ocr-lang">中文 + 英文 · 离线</span>
+        </div>
+        <div class="ocr-progress" id="ocrProgress" hidden>
+          <div class="ocr-track"><span id="ocrBarFill"></span></div>
+          <span id="ocrProgressText">准备中…</span>
+        </div>
+        <div class="ocr-result">
+          <div class="ocr-meta">
+            <span id="ocrMeta">尚未识别</span>
+            <span id="ocrCharCount"></span>
+          </div>
+          <textarea id="ocrText" spellcheck="false" placeholder="识别结果会显示在这里，可以继续修改、复制或插入为文本框。"></textarea>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <span class="ocr-foot-hint">「转为可编辑页」按原行位置重建文本；「生成文字页」不会覆盖原扫描页。</span>
+        <div class="modal-actions">
+          <button class="btn-ghost" id="btnOcrCopy" disabled><svg class="icon"><use href="#i-file"/></svg>复制文字</button>
+          <button class="btn-ghost" id="btnOcrNewPage" disabled><svg class="icon"><use href="#i-plus-page"/></svg>生成文字页</button>
+          <button class="btn-primary" id="btnOcrApply" disabled><svg class="icon"><use href="#i-scan"/></svg>转为可编辑页</button>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <div class="busy-overlay" id="busyOverlay" hidden>
+    <div class="busy-card">
+      <div class="busy-spinner"><span></span><span></span><span></span></div>
+      <strong id="busyTitle">正在处理</strong>
+      <span id="busyDetail">请稍候…</span>
+      <div class="busy-track"><span id="busyBar"></span></div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+
+  <script src="./vendor/pdf-lib/pdf-lib.min.js"></script>
+  <script src="./vendor/tesseract/tesseract.min.js"></script>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

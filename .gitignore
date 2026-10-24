@@ -1,0 +1,13 @@
+﻿node_modules/
+.pnpm-store/
+.tools-test/
+dist/
+family-hub/
+family-hub-origin.git/
+family-hub-source.zip
+family-hub-sync.bundle
+cloudflared.exe
+start-family-hub.cmd
+pnpm-workspace.yaml
+*.log
+*.tmp

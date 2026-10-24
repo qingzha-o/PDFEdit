@@ -1,0 +1,5 @@
+;!@Install@!UTF-8!
+Title="Folio PDF Studio"
+RunProgram="install.cmd"
+GUIMode="2"
+;!@InstallEnd@!

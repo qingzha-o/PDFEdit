@@ -1,0 +1,145 @@
+﻿<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<style>
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #e9e5dc; }
+body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; color: #24372f; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { position: relative; width: 210mm; height: 297mm; overflow: hidden; page-break-after: always; background: #FCFAF4; }
+.page:last-child { page-break-after: auto; }
+.pad { position: absolute; inset: 19mm 19mm 16mm; }
+.side { position: absolute; left: 0; top: 0; bottom: 0; width: 4.2mm; background: #1E4A3D; }
+.topline { display: flex; justify-content: space-between; font-family: Arial, sans-serif; font-size: 6.6pt; letter-spacing: .14em; color: #777568; }
+.dotline { border-top: .3pt solid #DAD4C7; margin-top: 3mm; }
+.hero { position: relative; margin-top: 19mm; }
+h1 { font-family: "SimHei", "Microsoft YaHei", sans-serif; font-weight: 400; font-size: 70pt; line-height: 1; letter-spacing: .06em; margin: 0; color: #173A30; }
+.kicker { margin-top: 4mm; font-family: Arial, sans-serif; font-size: 7.2pt; letter-spacing: .22em; color: #B15A3D; }
+.lede { width: 116mm; margin: 12mm 0 0; font-family: Georgia, "Times New Roman", serif; font-style: italic; font-size: 15.4pt; line-height: 1.5; color: #5B6C62; }
+.circles { position: absolute; right: 16mm; top: 22mm; width: 62mm; height: 62mm; }
+.circle { position: absolute; border: .55pt solid #D6D0C1; border-radius: 50%; }
+.circle.a { inset: 0; }
+.circle.b { inset: 7mm; }
+.orange-box { position: absolute; right: 34mm; top: 41mm; width: 21mm; height: 21mm; background: #C65F3F; }
+.orange-inner { position: absolute; right: 39mm; top: 46mm; width: 11mm; height: 11mm; background: #F2E5D4; }
+.rule { width: 65mm; border-top: .8pt solid #C65F3F; margin-top: 18mm; }
+.section-no { margin-top: 4mm; font-family: Arial, sans-serif; font-size: 6.4pt; letter-spacing: .16em; color: #A19E8E; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12mm; margin-top: 13mm; width: 159mm; }
+.cols p { margin: 0; font-size: 9.2pt; line-height: 1.95; color: #3E4B43; }
+.cols .en { font-family: "Times New Roman", Georgia, serif; font-size: 10pt; line-height: 1.72; color: #4B5850; }
+.quote { margin-top: 25mm; padding-left: 14mm; position: relative; }
+.quote .mark { position: absolute; left: 0; top: -5mm; font-family: Georgia, serif; font-size: 44pt; line-height: 1; color: #C65F3F; opacity: .75; }
+.quote blockquote { margin: 0; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-size: 15pt; line-height: 1.8; color: #223B32; }
+.quote .cite { margin-top: 3mm; font-family: Arial, sans-serif; font-size: 6.6pt; letter-spacing: .08em; color: #8E8C7F; }
+.toc { position: absolute; left: 19mm; right: 19mm; bottom: 27mm; }
+.toc-title { font-family: Arial, sans-serif; font-size: 6.6pt; letter-spacing: .18em; color: #A29F90; margin-bottom: 5mm; }
+.toc-row { display: flex; align-items: baseline; gap: 7mm; padding: 3.2mm 0; border-top: .3pt solid #DDD7CA; font-family: Arial, sans-serif; font-size: 7.8pt; color: #3C473F; }
+.toc-row .no { color: #B15A3D; width: 8mm; }
+.toc-row .pg { margin-left: auto; font-family: "Courier New", monospace; color: #979586; }
+.footer { position: absolute; left: 19mm; right: 19mm; bottom: 11mm; display: flex; justify-content: space-between; padding-top: 3.5mm; border-top: .35pt solid #DAD4C7; font-family: Arial, sans-serif; font-size: 6.2pt; letter-spacing: .11em; color: #9B9A8D; }
+.p2 { background: #F8F5ED; }
+.p2 .topbar { position: absolute; left: 0; right: 0; top: 0; height: 2.6mm; background: #C65F3F; }
+.p2 h2 { margin: 25mm 0 0; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-weight: 400; font-size: 43pt; letter-spacing: .07em; color: #1E3E34; }
+.p2 .sub { margin-top: 5mm; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-size: 12.4pt; line-height: 1.85; color: #6D766C; }
+.obs-label { margin-top: 17mm; font-family: Arial, sans-serif; font-size: 6.4pt; letter-spacing: .18em; color: #A29F90; }
+.obs { display: grid; grid-template-columns: 12mm 1fr; gap: 4mm; padding: 8mm 0; border-bottom: .3pt solid #E0DACE; }
+.obs .n { font-family: Arial, sans-serif; font-size: 8.5pt; color: #C65F3F; padding-top: 1.5mm; }
+.obs h3 { margin: 0; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-weight: 400; font-size: 16pt; color: #1F3B32; }
+.obs .en { margin-top: 1mm; font-family: Arial, sans-serif; font-size: 6pt; letter-spacing: .12em; color: #A09D8D; }
+.obs p { margin: 3.5mm 0 0; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-size: 8.9pt; line-height: 1.85; color: #546158; }
+.green-quote { position: absolute; left: 19mm; right: 19mm; bottom: 29mm; height: 28mm; background: #1E4A3D; padding: 7mm 9mm; color: #F4EFE3; }
+.green-quote .mark { font-family: Georgia, serif; font-size: 25pt; color: #D9A37D; line-height: .7; }
+.green-quote blockquote { margin: 1mm 0 0; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-size: 12.5pt; line-height: 1.7; }
+.green-quote .cite { margin-top: 2mm; font-family: Arial, sans-serif; font-size: 6pt; letter-spacing: .12em; color: #B9C9BE; }
+.p3 h2 { margin: 25mm 0 0; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-weight: 400; font-size: 54pt; letter-spacing: .12em; color: #173A30; }
+.p3 .en-kicker { margin-top: 4mm; font-family: Arial, sans-serif; font-size: 6.8pt; letter-spacing: .2em; color: #B15A3D; }
+.p3 .intro { width: 132mm; margin-top: 12mm; font-family: "SimHei", "Microsoft YaHei", sans-serif; font-size: 10.8pt; line-height: 1.95; color: #58665D; }
+.p3 .rule { margin-top: 14mm; width: 100%; }
+.index { margin-top: 10mm; }
+.idx-row { display: grid; grid-template-columns: 10mm 22mm 40mm 22mm 1fr; align-items: baseline; gap: 5mm; padding: 6.2mm 0; border-bottom: .3pt solid #E0DACE; }
+.idx-row .no { font-family: Arial, sans-serif; font-size: 8.2pt; color: #C65F3F; }
+.idx-row .cn { font-family: "SimHei", "Microsoft YaHei", sans-serif; font-size: 14pt; color: #263D34; }
+.idx-row .en { font-family: Arial, sans-serif; font-size: 6pt; letter-spacing: .1em; color: #A3A091; }
+.idx-row .time { font-family: "Courier New", monospace; font-size: 8.4pt; color: #5B6A61; }
+.idx-row .note { font-family: "Times New Roman", serif; font-size: 7pt; color: #798279; }
+.colophon { position: absolute; left: 19mm; bottom: 26mm; }
+.colophon .label { font-family: Arial, sans-serif; font-size: 6.2pt; letter-spacing: .18em; color: #A09D8D; margin-bottom: 4mm; }
+.colophon p { width: 92mm; margin: 0; font-family: "Times New Roman", Georgia, serif; font-style: italic; font-size: 8.6pt; line-height: 1.6; color: #778076; }
+.colophon .stamp { position: absolute; left: 132mm; bottom: 0; width: 46mm; font-family: Arial, sans-serif; font-size: 6pt; line-height: 1.7; letter-spacing: .1em; color: #A09D8D; }
+.small-caps { letter-spacing: .12em; }
+</style></head>
+<body>
+<section class="page p1">
+  <div class="side"></div>
+  <div class="pad">
+    <div class="topline"><span>FOLIO / FIELD NOTES</span><span>ISSUE 06 — AUTUMN 2026</span></div>
+    <div class="dotline"></div>
+    <div class="circles"><span class="circle a"></span><span class="circle b"></span></div>
+    <div class="orange-box"></div><div class="orange-inner"></div>
+    <div class="hero">
+      <h1>山野之间</h1>
+      <div class="kicker">BETWEEN MOUNTAINS AND FIELDS</div>
+      <p class="lede">Notes on quiet landscapes, slow mornings, and the shapes of light.</p>
+    </div>
+    <div class="rule"></div>
+    <div class="section-no">01&nbsp;&nbsp;/&nbsp;&nbsp;PROLOGUE</div>
+    <div class="cols">
+      <p>在雾还没散尽的时候，山谷先醒了过来。先是溪水，然后是鸟鸣，最后才是光。我们带着一本薄薄的笔记，沿着旧石阶往上走，把遇见的每一种颜色都留在纸上。</p>
+      <p class="en">The valley wakes before the fog has lifted. First the stream, then the birds, then the light. We walked the old stone steps with a thin notebook, keeping every colour we met on the page.</p>
+    </div>
+    <div class="quote">
+      <span class="mark">“</span>
+      <blockquote>山不说话，但每一道山脊都在记录时间。</blockquote>
+      <div class="cite">— 田野笔记，第 12 页</div>
+    </div>
+    <div class="toc">
+      <div class="toc-title">CONTENTS</div>
+      <div class="toc-row"><span class="no">01</span><span>观察笔记 / FIELD NOTES</span><span class="pg">04</span></div>
+      <div class="toc-row"><span class="no">02</span><span>附录 / APPENDIX</span><span class="pg">12</span></div>
+    </div>
+    <div class="footer"><span>FOLIO / FIELD NOTES</span><span>01 / 03</span></div>
+  </div>
+</section>
+
+<section class="page p2">
+  <div class="topbar"></div>
+  <div class="pad">
+    <div class="topline"><span>02 / FIELD NOTES</span><span>AUTUMN / 06</span></div>
+    <h2>观察笔记</h2>
+    <div class="sub">风从峡谷里来，带着松针、湿石和一点点旧木头的气味。</div>
+    <div class="dotline" style="margin-top:14mm"></div>
+    <div class="obs-label">THREE SMALL OBSERVATIONS</div>
+    <div class="obs"><div class="n">01</div><div><h3>石头的温度</h3><div class="en">THE TEMPERATURE OF STONE</div><p>太阳落下去以后，石头还把白天的温度留在里面。用手掌贴上去，像碰到一段没有说完的话。</p></div></div>
+    <div class="obs"><div class="n">02</div><div><h3>松针的气味</h3><div class="en">THE SMELL OF PINE NEEDLES</div><p>雨后的松针气味很轻，要停下来才闻得到。它不占据空间，只是把空气换成了另一种颜色。</p></div></div>
+    <div class="obs"><div class="n">03</div><div><h3>光的落点</h3><div class="en">WHERE THE LIGHT LANDS</div><p>下午四点，光会落在西边那块岩壁上。每天只出现一小会儿，像一个准时但安静的朋友。</p></div></div>
+    <div class="green-quote">
+      <div class="mark">“</div>
+      <blockquote>我们把速度放慢，风景才愿意把细节交出来。</blockquote>
+      <div class="cite">FIELD NOTE / 12 OCT 2026</div>
+    </div>
+    <div class="footer"><span>FOLIO / FIELD NOTES</span><span>02 / 03</span></div>
+  </div>
+</section>
+
+<section class="page p3">
+  <div class="side"></div>
+  <div class="pad">
+    <div class="topline"><span>03 / APPENDIX</span><span>A SMALL INDEX OF DAYS</span></div>
+    <h2>附录</h2>
+    <div class="en-kicker">A SMALL INDEX OF DAYS</div>
+    <div class="intro">记录不是为了留住时间，而是为了在以后某个普通的下午，重新听见那天的风。</div>
+    <div class="rule"></div>
+    <div class="index">
+      <div class="idx-row"><span class="no">01</span><span class="cn">晨雾</span><span class="en">MORNING FOG</span><span class="time">05:40</span><span class="note">Visibility 120 m</span></div>
+      <div class="idx-row"><span class="no">02</span><span class="cn">溪流</span><span class="en">STREAM</span><span class="time">07:15</span><span class="note">Temperature 8.4 °C</span></div>
+      <div class="idx-row"><span class="no">03</span><span class="cn">山脊</span><span class="en">RIDGE</span><span class="time">17:20</span><span class="note">Wind NW 12 km/h</span></div>
+      <div class="idx-row"><span class="no">04</span><span class="cn">归途</span><span class="en">RETURN</span><span class="time">19:05</span><span class="note">Light amber</span></div>
+    </div>
+    <div class="colophon">
+      <div class="label">COLOPHON</div>
+      <p>Set in SimHei, Times New Roman &amp; Georgia. Made for slow reading and long walks.</p>
+      <div class="stamp">FOLIO STUDIO / 2026<br>PRINTED IN THE MOUNTAINS</div>
+    </div>
+    <div class="footer"><span>FOLIO / FIELD NOTES</span><span>03 / 03</span></div>
+  </div>
+</section>
+</body></html>
