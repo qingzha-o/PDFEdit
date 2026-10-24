@@ -155,14 +155,18 @@ pnpm dist        # 生成 electron-builder 的 NSIS 构建
 index.html                  单屏界面
 styles.css                  界面样式
 src/main.js                 应用状态、页面导航、编辑会话、移动/缩放与 UI 交互
+src/ocr.js                  Tesseract 离线 OCR、语言包加载与清理
 src/pdf-engine.js           PDF.js 加载、渲染、文本分析
 src/pdf-fonts.js            PDF 字体资源与描述符读取
 src/text-blocks.js          文本分块、真实字体映射、颜色检测
 src/auto-fit.js             自动换行、行距/字号压缩、页内布局
 src/exporter.js             PDF 导出与编辑页栅格化
+electron/main.cjs           Electron 桌面壳、静态服务、原生关闭确认
+build/oneclick/             Windows 一键安装器脚本与 SFX stub
 server.mjs                  零依赖静态服务器
 vendor/pdfjs/               PDF.js 与 CMap / 标准字体资源
 vendor/pdf-lib/             PDF-lib
+vendor/tesseract/           Tesseract.js、WASM 核心与中英文语言包
 sample.pdf                  三页示例文档
 sample-replacement.pdf      两页替换页示例
 tools/                      示例生成脚本（开发用）
@@ -170,7 +174,7 @@ tools/                      示例生成脚本（开发用）
 
 ## 已知边界
 
-- 扫描件 / 纯图片 PDF 没有文本层，不能直接改文字，但可以整页替换，或在空白区域添加文字。
+- 扫描件 / 纯图片 PDF 没有文本层，可通过 OCR「转为可编辑页」按原行位置重建文字；未转换时仍只能整页替换或添加新文字。
 - 编辑过的页面在导出后会变成图片，文字不可再被搜索或选中；未编辑页面仍保持矢量。这是为了在不同机器上稳定保留视觉版式。
 - 本机未安装的嵌入字体只能回退到通用字族；PDF 字体表无法保证每台机器都具备同样的字体文件。
 - 目前一次编辑一个文本块；不支持跨块同时选择或自动重排整页后续段落。移动文本框后可能与其它内容重叠。
