@@ -2,6 +2,11 @@
 setlocal
 cd /d "%~dp0"
 
+if not defined FOLIO_HOME set "FOLIO_HOME=%~dp0"
+if not defined FOLIO_PORT set "FOLIO_PORT=4173"
+if not defined FOLIO_HOST set "FOLIO_HOST=127.0.0.1"
+if not defined FOLIO_DATA set "FOLIO_DATA=%~dp0data"
+
 where node >nul 2>nul
 if not errorlevel 1 (
   node server.mjs

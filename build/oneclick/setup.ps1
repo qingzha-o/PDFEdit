@@ -1,7 +1,10 @@
 $ErrorActionPreference = 'Stop'
 $src = Join-Path $PSScriptRoot 'app'
-$dest = Join-Path $env:LOCALAPPDATA 'Programs\Folio PDF Studio'
+$fHome = 'F:\DSH\PDFEdit'
+$hasFHome = Test-Path $fHome
+$dest = if ($env:FOLIO_RUNTIME) { $env:FOLIO_RUNTIME } elseif ($hasFHome) { Join-Path $fHome 'app' } else { Join-Path $env:LOCALAPPDATA 'Programs\Folio PDF Studio' }
 $exe = Join-Path $dest 'Folio PDF Studio.exe'
+$data = if ($env:FOLIO_DATA) { $env:FOLIO_DATA } elseif ($hasFHome) { Join-Path $fHome 'data' } else { Join-Path $env:APPDATA 'Folio PDF Studio' }
 $log = Join-Path $env:TEMP 'folio-install.log'
 function Write-Log($m) { try { Add-Content -Path $log -Value ("[{0}] {1}" -f (Get-Date -Format 'HH:mm:ss'), $m) -Encoding utf8 } catch {} }
 Write-Log "install start: $dest"
@@ -10,6 +13,7 @@ try {
     Where-Object { $_.ExecutablePath -and $_.ExecutablePath.StartsWith($dest, [StringComparison]::OrdinalIgnoreCase) } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
   New-Item -ItemType Directory -Force -Path $dest | Out-Null
+  if ($data) { New-Item -ItemType Directory -Force -Path $data | Out-Null }
   & robocopy $src $dest /MIR /NFL /NDL /NJH /NJS /NP /R:2 /W:2 | Out-Null
   if ($LASTEXITCODE -ge 8) { throw "robocopy failed: $LASTEXITCODE" }
   Copy-Item -LiteralPath (Join-Path $PSScriptRoot 'Uninstall.ps1') -Destination (Join-Path $dest 'Uninstall.ps1') -Force
@@ -17,9 +21,11 @@ try {
   $ws = New-Object -ComObject WScript.Shell
   $desktop = [Environment]::GetFolderPath('Desktop')
   $programs = [Environment]::GetFolderPath('Programs')
+  $shortcutArgs = if ($data) { "--user-data-dir=`"$data`"" } else { '' }
 
   $sc = $ws.CreateShortcut((Join-Path $desktop 'Folio PDF Studio.lnk'))
   $sc.TargetPath = $exe
+  $sc.Arguments = $shortcutArgs
   $sc.WorkingDirectory = $dest
   $sc.IconLocation = "$exe,0"
   $sc.Description = 'Folio PDF Studio'
@@ -27,6 +33,7 @@ try {
 
   $sc = $ws.CreateShortcut((Join-Path $programs 'Folio PDF Studio.lnk'))
   $sc.TargetPath = $exe
+  $sc.Arguments = $shortcutArgs
   $sc.WorkingDirectory = $dest
   $sc.IconLocation = "$exe,0"
   $sc.Description = 'Folio PDF Studio'

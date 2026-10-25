@@ -3,9 +3,10 @@ import { createReadStream, existsSync, statSync } from 'node:fs';
 import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)));
-const PORT = Number(process.env.PORT || 4173);
-const HOST = process.env.HOST || '127.0.0.1';
+const DEFAULT_ROOT = resolve(fileURLToPath(new URL('.', import.meta.url)));
+const ROOT = process.env.FOLIO_HOME ? resolve(process.env.FOLIO_HOME) : DEFAULT_ROOT;
+const PORT = Number(process.env.FOLIO_PORT || process.env.PORT || 4173);
+const HOST = process.env.FOLIO_HOST || process.env.HOST || '127.0.0.1';
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -81,4 +82,5 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, HOST, () => {
   console.log(`Folio PDF Studio running at http://${HOST}:${PORT}`);
+  console.log(`Root: ${ROOT}`);
 });

@@ -1,7 +1,11 @@
-﻿node_modules/
+node_modules/
 .pnpm-store/
 .tools-test/
 dist/
+app/
+data/
+.env
+installer/
 family-hub/
 family-hub-origin.git/
 family-hub-source.zip

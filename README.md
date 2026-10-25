@@ -24,16 +24,37 @@ http://127.0.0.1:4173
 
 ## Windows 桌面版
 
-已打包并部署到当前电脑：
+已迁移并部署到 `F:\DSH\PDFEdit`（`F:\DSH` 根目录已有其它项目，PDFEdit 保持独立子目录）：
 
 | 产物 | 路径 |
 | --- | --- |
-| 一键安装包（本地构建） | `dist/Folio-PDF-Studio-Setup-1.0.0.exe` |
-| 已安装位置 | `%LOCALAPPDATA%\Programs\Folio PDF Studio` |
+| 源码 / 应用根目录 | `F:\DSH\PDFEdit` |
+| 桌面程序 | `F:\DSH\PDFEdit\app` |
+| 应用数据 | `F:\DSH\PDFEdit\data` |
+| 一键安装包（本地构建） | `F:\DSH\PDFEdit\dist\Folio-PDF-Studio-Setup-1.0.0.exe` |
 
-仓库只提交源码、依赖资源和构建脚本；约 128 MB 的安装包超过 GitHub 单文件提交限制，因此保存在本机 `dist/`，不进入 Git 历史。
+对应环境变量（用户级已设置，`start.cmd` 也会补默认值）：
 
-安装版会在桌面和开始菜单创建 **Folio PDF Studio** 快捷方式，安装到当前用户目录，不需要管理员权限。当前机器已经直接部署完成，可以直接双击桌面快捷方式启动。
+```text
+FOLIO_HOME=F:\DSH\PDFEdit
+FOLIO_RUNTIME=F:\DSH\PDFEdit\app
+FOLIO_DATA=F:\DSH\PDFEdit\data
+FOLIO_PORT=4173
+FOLIO_HOST=127.0.0.1
+```
+
+本地网页版：
+
+```powershell
+cd F:\DSH\PDFEdit
+.\start.cmd
+```
+
+然后打开 `http://127.0.0.1:4173`。桌面快捷方式指向 `F:\DSH\PDFEdit\app\Folio PDF Studio.exe`，并通过 `--user-data-dir="F:\DSH\PDFEdit\data"` 使用独立数据目录。
+
+仓库只提交源码、依赖资源和构建脚本；约 128 MB 的安装包超过 GitHub 单文件限制，因此保存在本机 `dist/`，不进入 Git 历史。
+
+安装版会在桌面和开始菜单创建 **Folio PDF Studio** 快捷方式，安装到 `FOLIO_RUNTIME`（默认 `F:\DSH\PDFEdit\app`），不需要管理员权限。当前机器已经直接部署完成，可以直接双击桌面快捷方式启动。
 
 卸载方式：开始菜单中的 **Uninstall Folio PDF Studio**，或 Windows 设置 → 应用 → 已安装的应用 → Folio PDF Studio。
 
